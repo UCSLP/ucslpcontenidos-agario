@@ -31,7 +31,12 @@ http.createServer(function (req, res) {
             var dx = jugadores[i].pos[0] - jugador.pos[0];
             var dy = jugadores[i].pos[1] - jugador.pos[1];
             var d = Math.sqrt((dx*dx)+(dy*dy));
-            var objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam, color: jugadores[i].color};
+            var objetojugador
+            if(jugadores[i].color)
+            {
+              objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam, color: jugadores[i].color};
+            }
+            else objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
             otrosjugadores.push(objetojugador);
           }
           res.end(JSON.stringify(otrosjugadores));
