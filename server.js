@@ -50,10 +50,10 @@ http.createServer(function (req, res) {
             if(jugador.nom === jugadores[i].nom)
             {
               jugadores[i].color = jugador.col;
+              res.end(JSON.stringify(jugadores[i]));
             }
           }
         }
-        res.end(JSON.stringify(jugador));
     } else {
       res.end('incorrecto');
     }
