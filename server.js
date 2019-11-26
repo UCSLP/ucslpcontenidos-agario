@@ -21,17 +21,18 @@ http.createServer(function (req, res) {
             break;
           }
         }
-        if(typeof jugador.col === 'object')
-        {
-          for(var i = 0; i < jugadores.length; i++){
-            if(jugador.nom === jugadores[i].nom)
-            {
-              jugadores[i].color = jugador.col;
-            }
-          }
-        }
+        
         if(indice < 0){
           jugadores.push(jugador);
+          if(typeof jugador.col === 'object')
+          {
+            for(var i = 0; i < jugadores.length; i++){
+              if(jugador.nom === jugadores[i].nom)
+              {
+                jugadores[i].color = jugador.col;
+              }
+            }
+          }
           res.end('Jugador Creado');
         } else {
           var otrosjugadores = [];
