@@ -29,7 +29,7 @@ http.createServer(function (req, res) {
             for(var i = 0; i < jugadores.length; i++){
               if(jugador.nom === jugadores[i].nom)
               {
-                jugadores[i].color = jugador.col;
+                Object.defineProperty(jugadores[i], "color", jugador.col);
               }
             }
           }
@@ -42,10 +42,9 @@ http.createServer(function (req, res) {
             var dy = jugadores[i].pos[1] - jugador.pos[1];
             var d = Math.sqrt((dx*dx)+(dy*dy));
             var objetojugador = objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
-            if(typeof jugador.col === 'object')
+            if(jugadores[i].color)
             {
-              Object.defineProperty(objetoJugador, "color", jugador.col);
-              objetojugador.color = jugador.col;
+              Object.defineProperty(objetojugador, "color", jugadores[i].color);
             }
             
             otrosjugadores.push(objetojugador);
