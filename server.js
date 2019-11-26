@@ -53,6 +53,7 @@ http.createServer(function (req, res) {
             }
           }
         }
+        res.end(jugador);
     } else {
       res.end('incorrecto');
     }
