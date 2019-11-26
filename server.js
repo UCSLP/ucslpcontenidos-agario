@@ -46,6 +46,7 @@ http.createServer(function (req, res) {
             {
               if(jugador.nom === objetojugador.nom)
               {
+                Object.defineProperty(objetoJugador, "color", jugador.col);
                 objetojugador.color = jugador.col;
               }
             }
