@@ -31,12 +31,15 @@ http.createServer(function (req, res) {
             var dx = jugadores[i].pos[0] - jugador.pos[0];
             var dy = jugadores[i].pos[1] - jugador.pos[1];
             var d = Math.sqrt((dx*dx)+(dy*dy));
-            var objetojugador
-            if(jugadores[i].color)
+            var objetojugador = objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
+            if(typeof jugador.col === 'object')
             {
-              objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam, color: jugadores[i].color};
+              if(jugador.nom === objetojugador.nom)
+              {
+                objetojugador.color = jugador.col;
+              }
             }
-            else objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
+            
             otrosjugadores.push(objetojugador);
           }
           res.end(JSON.stringify(otrosjugadores));
