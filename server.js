@@ -42,7 +42,7 @@ http.createServer(function (req, res) {
             
             otrosjugadores.push(objetojugador);
           }
-          res.end(JSON.stringify(otrosjugadores));
+          //res.end(JSON.stringify(otrosjugadores));
         }
         if(typeof jugador.col === 'object')
         {
