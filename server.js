@@ -21,6 +21,15 @@ http.createServer(function (req, res) {
             break;
           }
         }
+        if(typeof jugador.col === 'object')
+        {
+          for(var i = 0; i < jugadores.length; i++){
+            if(jugador.nom === jugadores[i].nom)
+            {
+              jugadores[i].color = jugador.col;
+            }
+          }
+        }
         if(indice < 0){
           jugadores.push(jugador);
           res.end('Jugador Creado');
@@ -42,18 +51,9 @@ http.createServer(function (req, res) {
             
             otrosjugadores.push(objetojugador);
           }
-          //res.end(JSON.stringify(otrosjugadores));
+          res.end(JSON.stringify(otrosjugadores));
         }
-        if(typeof jugador.col === 'object')
-        {
-          for(var i = 0; i < jugadores.length; i++){
-            if(jugador.nom === jugadores[i].nom)
-            {
-              jugadores[i].color = jugador.col;
-              res.end(JSON.stringify(jugadores[i]));
-            }
-          }
-        }
+        
     } else {
       res.end('incorrecto');
     }
