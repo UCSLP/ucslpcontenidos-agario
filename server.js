@@ -13,7 +13,8 @@ http.createServer(function (req, res) {
        typeof jugador.pos === 'object' &&
        typeof jugador.pos.length === 'number' &&
        jugador.pos.length === 2 &&
-       typeof jugador.tam === 'number'){
+       typeof jugador.tam === 'number' &&
+       typeof jugador.col === 'object' ){
         var indice = -1;
         for(var i = 0; i < jugadores.length; i++){
           if(jugadores[i].nom === jugador.nom){
@@ -24,15 +25,6 @@ http.createServer(function (req, res) {
         
         if(indice < 0){
           jugadores.push(jugador);
-          if(typeof jugador.col === 'object')
-          {
-            for(var i = 0; i < jugadores.length; i++){
-              if(jugador.nom === jugadores[i].nom)
-              {
-                Object.defineProperty(jugadores[i], "color", jugador.col);
-              }
-            }
-          }
           res.end('Jugador Creado');
         } else {
           var otrosjugadores = [];
@@ -41,11 +33,7 @@ http.createServer(function (req, res) {
             var dx = jugadores[i].pos[0] - jugador.pos[0];
             var dy = jugadores[i].pos[1] - jugador.pos[1];
             var d = Math.sqrt((dx*dx)+(dy*dy));
-            var objetojugador = objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
-            if(jugadores[i].color)
-            {
-              Object.defineProperty(objetojugador, "color", jugadores[i].color);
-            }
+            var objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam, color: jugadores[i].col};
             
             otrosjugadores.push(objetojugador);
           }
