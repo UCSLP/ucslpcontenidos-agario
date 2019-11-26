@@ -44,11 +44,8 @@ http.createServer(function (req, res) {
             var objetojugador = objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
             if(typeof jugador.col === 'object')
             {
-              if(jugador.nom === objetojugador.nom)
-              {
-                Object.defineProperty(objetoJugador, "color", jugador.col);
-                objetojugador.color = jugador.col;
-              }
+              Object.defineProperty(objetoJugador, "color", jugador.col);
+              objetojugador.color = jugador.col;
             }
             
             otrosjugadores.push(objetojugador);
