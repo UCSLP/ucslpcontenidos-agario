@@ -31,7 +31,7 @@ http.createServer(function (req, res) {
             var dx = jugadores[i].pos[0] - jugador.pos[0];
             var dy = jugadores[i].pos[1] - jugador.pos[1];
             var d = Math.sqrt((dx*dx)+(dy*dy));
-            var objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam};
+            var objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam, color: jugadores[i].color};
             otrosjugadores.push(objetojugador);
           }
           res.end(JSON.stringify(otrosjugadores));
@@ -39,7 +39,7 @@ http.createServer(function (req, res) {
         if(typeof jugador.col === 'object')
         {
           for(var i = 0; i < jugadores.length; i++){
-            if(jugador.nom === jugadores[i])
+            if(jugador.nom === jugadores[i].nom)
             {
               jugadores[i].color = jugador.col;
             }
