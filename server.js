@@ -4,7 +4,7 @@ var url = require('url');
 var jugadores = [];
 
 http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.writeHead(200, {'Content-Type': 'json/text'});
   var q = url.parse(req.url, true).query;
 
   if(q.jugador){
@@ -14,7 +14,7 @@ http.createServer(function (req, res) {
        typeof jugador.pos.length === 'number' &&
        jugador.pos.length === 2 &&
        typeof jugador.tam === 'number' &&
-       typeof jugador.col === 'object' ){
+       typeof jugador.col === 'string' ){
         var indice = -1;
         for(var i = 0; i < jugadores.length; i++){
           if(jugadores[i].nom === jugador.nom){
@@ -33,7 +33,7 @@ http.createServer(function (req, res) {
             var dx = jugadores[i].pos[0] - jugador.pos[0];
             var dy = jugadores[i].pos[1] - jugador.pos[1];
             var d = Math.sqrt((dx*dx)+(dy*dy));
-            var objetojugador = {nombre: jugadores[i].nom, Esta_a: d + " Unidades", mide: jugadores[i].tam, color: jugadores[i].col};
+            var objetojugador = {nombre: jugadores[i].nom, Distancia: d, tamaño: jugadores[i].tam, color: jugadores[i].col};
             
             otrosjugadores.push(objetojugador);
           }
