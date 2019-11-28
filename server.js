@@ -4,7 +4,7 @@ var url = require('url');
 var jugadores = [];
 
 http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'json/text'});
+  res.writeHead(200, {'Content-Type': 'text/json'});
   var q = url.parse(req.url, true).query;
 
   if(q.jugador){
