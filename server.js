@@ -2,48 +2,75 @@ var http = require('http');
 var url = require('url');
 
 var jugadores = [];
+var bolitas = [];
+var tam_tablero = [
+    800,
+    800
+];
+// generar bolitas aleatorias
+for (var i = 0; i < 20; i++) {
+    var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    bolitas.push({
+        "tam": 1,
+        "pos": [
+            Math.floor(Math.random() * tam_tablero[0]),
+            Math.floor(Math.random() * tam_tablero[1])
+        ],
+        "col": randomColor
+    });
+}
+
+function crear_o_actualizar_jugador(jugador, res) {
+    // revisar que el jugador tenga todo lo necesario
+    if (typeof jugador.nom === 'string' &&
+            typeof jugador.pos === 'object' &&
+            jugador.pos.length === 2 &&
+            typeof jugador.pos[0] === 'number' &&
+            typeof jugador.pos[1] === 'number' &&
+            typeof jugador.tam === 'number' &&
+            typeof jugador.col === 'string') {
+        // revisar si el jugador ya existe
+        var indice = -1;
+        for (var i = 0; i < jugadores.length; i++) {
+            if (jugadores[i].nom === jugador.nom) {
+                indice = i;
+                break;
+            }
+        }
+        // si el jugador no existe, crearlo
+        if (indice < 0) {
+            jugadores.push(jugador);
+            res.end('200');
+        } else {
+            // si el jugador ya existe actualizarlo
+            var otrosjugadores = [];
+            jugadores[indice] = jugador;
+            for (var i = 0; i < jugadores.length; i++) {
+                var dx = jugadores[i].pos[0] - jugador.pos[0];
+                var dy = jugadores[i].pos[1] - jugador.pos[1];
+                var d = Math.sqrt((dx * dx) + (dy * dy));
+                var objetojugador = {
+                    nombre: jugadores[i].nom,
+                    distancia: d,
+                    radio: jugadores[i].tam,
+                    color: jugadores[i].col
+                };
+                otrosjugadores.push(objetojugador);
+            }
+            res.end(JSON.stringify([otrosjugadores, bolitas]));
+        }
+    } else {
+        res.end('405');
+    }
+}
 
 http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'application/json'});
-  var q = url.parse(req.url, true).query;
-
-  if(q.jugador){
-    var jugador = JSON.parse(q.jugador);
-    if(typeof jugador.nom === 'string' &&
-       typeof jugador.pos === 'object' &&
-       typeof jugador.pos.length === 'number' &&
-       jugador.pos.length === 2 &&
-       typeof jugador.tam === 'number' &&
-       typeof jugador.col === 'string' ){
-        var indice = -1;
-        for(var i = 0; i < jugadores.length; i++){
-          if(jugadores[i].nom === jugador.nom){
-            indice = i;
-            break;
-          }
-        }
-        
-        if(indice < 0){
-          jugadores.push(jugador);
-          res.end('200');
-        } else {
-          var otrosjugadores = [];
-          jugadores[indice] = jugador;
-          for(var i = 0; i < jugadores.length; i++){
-            var dx = jugadores[i].pos[0] - jugador.pos[0];
-            var dy = jugadores[i].pos[1] - jugador.pos[1];
-            var d = Math.sqrt((dx*dx)+(dy*dy));
-            var objetojugador = {nombre: jugadores[i].nom, Distancia: d, tamaño: jugadores[i].tam, color: jugadores[i].col};
-            
-            otrosjugadores.push(objetojugador);
-          }
-          res.end(JSON.stringify(otrosjugadores));
-        }
-        
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    var q = url.parse(req.url, true).query;
+    if (q.jugador) {
+        var jugador = JSON.parse(q.jugador);
+        crear_o_actualizar_jugador(jugador, res);
     } else {
-      res.end('incorrecto');
+        res.end('404');
     }
-  } else {
-     res.end('Error');
-  }
 }).listen(process.env.PORT);
