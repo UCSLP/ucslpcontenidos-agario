@@ -76,6 +76,45 @@ http.createServer(function (req, res) {
     if (q.jugador) {
         var jugador = JSON.parse(q.jugador);
         crear_o_actualizar_jugador(jugador, res);
+    } else if(q.eliminar){
+        var indice = JSON.parse(q.eliminar);
+        bolitas[indice].pos =[
+            Math.floor(Math.random() * tam_tablero[0]),
+            Math.floor(Math.random() * tam_tablero[1])
+        ];
+        
+    } else if(q.eliminarJugador){
+        var jugadoresEliminar = JSON.parse(q.eliminarJugador);
+        var existen = 0;
+        var indice = [];
+       for(var i = 0; i < jugadores.length; i++)
+       {
+           if(jugadores[i].nom === jugadoresEliminar[0] || jugadores[i].nom === jugadoresEliminar[1])
+           {
+               existen++;
+               indice.push(i);
+           }
+       }
+       
+       if(existen === 2)
+       {
+           var temp = [];
+           if(jugadores[indice[0]].tam >  jugadores[indice[1]].tam)
+           {
+               for(var i = 0; i < jugadores.length; i++)
+               {
+                   if(i !== indice[1]) temp.push(jugadores[i]);
+               }
+           } else if(jugadores[indice[1]].tam >  jugadores[indice[0]].tam)
+           {
+               for(var i = 0; i < jugadores.length; i++)
+               {
+                   if(i !== indice[0]) temp.push(jugadores[i]);
+               }
+           }
+           if(temp.length > 0) jugadores = temp;
+       }
+       
     } else {
         res.end('404');
     }
