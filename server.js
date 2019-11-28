@@ -82,7 +82,7 @@ http.createServer(function (req, res) {
             Math.floor(Math.random() * tam_tablero[0]),
             Math.floor(Math.random() * tam_tablero[1])
         ];
-        
+        res.end("1000");
     } else if(q.eliminarJugador){
         var jugadoresEliminar = JSON.parse(q.eliminarJugador);
         var existen = 0;
@@ -114,7 +114,8 @@ http.createServer(function (req, res) {
            }
            if(temp.length > 0) jugadores = temp;
        }
-       
+               res.end("1001");
+
     } else {
         res.end('404');
     }
