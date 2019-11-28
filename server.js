@@ -20,10 +20,29 @@ for (var i = 0; i < 20; i++) {
     });
 }
 
+function respuesta_jugadores(res) {
+    var temp = [];
+    for (var i = 0; i < jugadores.length; i++) {
+        var dx = jugadores[i].pos[0] - jugador.pos[0];
+        var dy = jugadores[i].pos[1] - jugador.pos[1];
+        var d = Math.sqrt((dx * dx) + (dy * dy));
+        var objetojugador = {
+            nom: jugadores[i].nom,
+            dis: d,
+            pos: jugadores[i].pos,
+            tam: jugadores[i].tam,
+            col: jugadores[i].col
+        };
+        temp.push(objetojugador);
+    }
+    res.end(JSON.stringify([temp, bolitas]));
+}
+
 function crear_o_actualizar_jugador(jugador, res) {
     // revisar que el jugador tenga todo lo necesario
     if (typeof jugador.nom === 'string' &&
             typeof jugador.pos === 'object' &&
+            typeof jugador.pos.length === 'number' &&
             jugador.pos.length === 2 &&
             typeof jugador.pos[0] === 'number' &&
             typeof jugador.pos[1] === 'number' &&
@@ -40,24 +59,11 @@ function crear_o_actualizar_jugador(jugador, res) {
         // si el jugador no existe, crearlo
         if (indice < 0) {
             jugadores.push(jugador);
-            res.end('200');
+            respuesta_jugadores(res)
         } else {
-            // si el jugador ya existe actualizarlo
-            var otrosjugadores = [];
+            // actualizar jugador
             jugadores[indice] = jugador;
-            for (var i = 0; i < jugadores.length; i++) {
-                var dx = jugadores[i].pos[0] - jugador.pos[0];
-                var dy = jugadores[i].pos[1] - jugador.pos[1];
-                var d = Math.sqrt((dx * dx) + (dy * dy));
-                var objetojugador = {
-                    nombre: jugadores[i].nom,
-                    distancia: d,
-                    radio: jugadores[i].tam,
-                    color: jugadores[i].col
-                };
-                otrosjugadores.push(objetojugador);
-            }
-            res.end(JSON.stringify([otrosjugadores, bolitas]));
+            respuesta_jugadores(res)
         }
     } else {
         res.end('405');
