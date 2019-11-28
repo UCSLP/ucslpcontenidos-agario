@@ -20,7 +20,7 @@ for (var i = 0; i < 20; i++) {
     });
 }
 
-function respuesta_jugadores(res) {
+function respuesta_jugadores(res, jugador) {
     var temp = [];
     for (var i = 0; i < jugadores.length; i++) {
         var dx = jugadores[i].pos[0] - jugador.pos[0];
@@ -59,11 +59,11 @@ function crear_o_actualizar_jugador(jugador, res) {
         // si el jugador no existe, crearlo
         if (indice < 0) {
             jugadores.push(jugador);
-            respuesta_jugadores(res)
+            respuesta_jugadores(res, jugador);
         } else {
             // actualizar jugador
             jugadores[indice] = jugador;
-            respuesta_jugadores(res)
+            respuesta_jugadores(res, jugador);
         }
     } else {
         res.end('405');
