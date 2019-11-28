@@ -25,7 +25,7 @@ http.createServer(function (req, res) {
         
         if(indice < 0){
           jugadores.push(jugador);
-          res.end(200);
+          res.end('200');
         } else {
           var otrosjugadores = [];
           jugadores[indice] = jugador;
