@@ -71,10 +71,10 @@ function crear_o_actualizar_jugador(jugador, res) {
 }
 
 http.createServer(function (req, res) {
-    res.setheader('access-control-allow-origin','*');
-    res.setheader('access-control-request-method','*');
-    res.setheader('access-control-allow-methods','OPTIONS,GET');
-    res.setheader('access-control-allow-headers','*');
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Request-Method','*');
+    res.setHeader('Access-Control-Allow-Methods','OPTIONS,GET');
+    res.setHeader('Access-Control-Allow-Headers','*');
     res.writeHead(200, {'Content-Type': 'application/json'});
     var q = url.parse(req.url, true).query;
     if (q.jugador) {
