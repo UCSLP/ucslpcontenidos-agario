@@ -4,11 +4,11 @@ var url = require('url');
 var jugadores = [];
 var bolitas = [];
 var tam_tablero = [
-    800*50,
-    800*50
+    2000,
+    2000
 ];
 // generar bolitas aleatorias
-for (var i = 0; i < 5000; i++) {
+for (var i = 0; i < 100; i++) {
     var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
     bolitas.push({
         "tam": 1,
