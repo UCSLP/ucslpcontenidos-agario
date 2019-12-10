@@ -8,7 +8,7 @@ var tam_tablero = [
     800*100
 ];
 // generar bolitas aleatorias
-for (var i = 0; i < 20*100; i++) {
+for (var i = 0; i < 5000; i++) {
     var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
     bolitas.push({
         "tam": 1,
